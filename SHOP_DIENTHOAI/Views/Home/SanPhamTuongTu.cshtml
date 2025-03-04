@@ -1,0 +1,22 @@
+﻿@model List<SHOP_DIENTHOAI.Models.SAN_PHAM>
+<div class="products">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="product">
+                <div class="image"><a href="@Url.Action("ChiTiet",new {id =item.MA_SP})"><img src="~/Asset/images/@item.HinhAnh"></a></div>
+
+                <div class="caption">
+                    <div class="name"><h3><a href="@Url.Action("ChiTiet",new {id=item.MA_SP })" style="color:red">@item.TEN_SP</a></h3></div>
+                    <div class="price" style="color: deepskyblue">@String.Format("{0:0,0}", item.GIA) VNĐ</div>
+                    <div class="price" style="color: deepskyblue">Số lượng còn: @item.SOLUONG</div>
+                    <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                </div>
+                @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = item.MA_SP, @strURL = Request.Url.ToString() }))
+                {
+                    <button class="btn btn-round btn-primary" type="submit" value="Mua hàng" id="bgnGioHang" style="height:40px"><i class="fa-solid fa-cart-shopping fa-beat" style="color: #fe8d0b;"></i> Thêm vào giỏ hàng</button>
+                }
+            </div>
+        </div>
+    }
+</div>

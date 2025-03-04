@@ -1,0 +1,79 @@
+﻿@model SHOP_DIENTHOAI.Models.NGUOI_DUNG
+
+@{
+    ViewBag.Title = "Hồ Sơ Người Dùng";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container profile-container">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="profile-card">
+                <img src="~/Asset/images/default-avatar.png" alt="Avatar" class="profile-avatar">
+                <h3 class="profile-name">@Model.TEN_ND</h3>
+                <a href="@Url.Action("Edit", new { id = Model.MA_ND })" class="btn btn-primary"><i class="fa fa-edit"></i> Chỉnh sửa hồ sơ</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="profile-details">
+                <h3 class="profile-heading">Thông Tin Cá Nhân</h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Email:</strong> @Model.EMAIL</li>
+                    <li class="list-group-item"><strong>Số điện thoại:</strong> @Model.DIEN_THOAI</li>
+                    <li class="list-group-item"><strong>Địa chỉ:</strong> @Model.DIA_CHI</li>
+                    @*<li class="list-group-item"><strong>Ngày tham gia:</strong> @Model.NGAY_TAO.ToString("dd/MM/yyyy")</li>*@
+                </ul>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-container {
+        margin-top: 30px;
+    }
+
+    .profile-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .profile-name {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .profile-role {
+        color: gray;
+        font-size: 16px;
+    }
+
+    .profile-details {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-heading {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .list-group-item {
+        font-size: 16px;
+        border: none;
+        padding: 10px 15px;
+    }
+</style>

@@ -1,0 +1,14 @@
+﻿@model List<SHOP_DIENTHOAI.Models.HANG_SAN_XUAT>
+<style>
+</style>
+<div class="dropdown-menu">
+    <div class="dropdown-inner">
+        @foreach (var item in Model)
+        {
+            <ul class="list-unstyled">
+                <li><a href="/HangSanXuat/BrandProduct/@item.MA_HSX">@item.TEN_HSX</a></li>
+            </ul>
+        }
+
+    </div>
+</div>

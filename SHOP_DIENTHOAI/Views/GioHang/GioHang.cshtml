@@ -1,0 +1,121 @@
+﻿@using SHOP_DIENTHOAI.Models;
+@model List<GIO_HANG>
+
+@{
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<style>
+    button {
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .btn-action {
+        font-size: 22px; /* Kích thước chữ lớn hơn */
+        padding: 15px 20px; /* Tăng padding */
+        width: 100%; /* Đảm bảo nút chiếm toàn bộ chiều ngang */
+        max-width: 300px; /* Giới hạn chiều rộng */
+        margin: 10px auto; /* Căn giữa các nút */
+    }
+
+
+    .product img {
+        max-width: 150px;
+        max-height: 100px;
+    }
+</style>
+
+<div id="page-content" class="single-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li>@Html.ActionLink("Trang Chủ", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Giỏ hàng", "GioHang", "GioHang")</li>
+                </ul>
+            </div>
+        </div>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-warning text-center">
+                <h3>Giỏ hàng của bạn đang trống!</h3>
+                @Html.ActionLink("Tiếp tục mua sắm", "Index", "Home", new { @class = "btn btn-primary" })
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 style="color:red">Tổng tiền: @String.Format("{0:0,0}", Model.Sum(item => item.ThanhTien)) VNĐ</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="product well row">
+                        <div class="col-md-3">
+                            <div class="image">
+                                <a href="@Url.Action("ChiTiet", new { id = item.iMasp })">
+                                    <img src="~/Asset/images/@item.sAnhBia" alt="@item.sTensp" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="caption">
+                                <h3 class="name">
+                                    <a href="@Url.Action("ChiTiet", new { id = item.iMasp })">@item.sTensp</a>
+                                </h3>
+                                <div class="info">
+                                    <ul>
+                                        <li>Giá bán: @String.Format("{0:0,0}", item.dDonGia) VNĐ</li>
+                                        <li>Thành tiền: @String.Format("{0:0,0}", item.ThanhTien) VNĐ</li>
+                                    </ul>
+                                </div>
+                                <label>Số lượng: @item.iSoLuong</label>
+
+                                <hr>
+
+                                <button class="btn btn-danger btn-action" onclick="xoaSanPham(@item.iMasp)">
+                                    <i class="fa fa-trash"></i> Xóa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            <div class="text-center">
+                <a href="@Url.Action("SuaGioHang", "GioHang")" class="btn btn-primary btn-action">
+                    <i class="fas fa-edit"></i> Chỉnh sửa giỏ hàng
+                </a>
+
+                @using (Html.BeginForm("ThanhToanDonHang", "GioHang", FormMethod.Post, new { @class = "d-inline-block" }))
+                {
+                    <button type="submit" class="btn btn-danger btn-action">
+                        <i class="fa-solid fa-cart-shopping fa-beat" style="color: #fe8d0b;"></i> Đặt hàng
+                    </button>
+
+                }
+            </div>
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <script>
+                alert("@TempData["ErrorMessage"]");
+            </script>
+        }
+    </div>
+</div>
+
+<script>
+    function xoaSanPham(maSP) {
+        if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
+            window.location.href = '@Url.Action("XoaGioHang", "GioHang")' + "?iMaSP=" + maSP;
+        }
+    }
+</script>

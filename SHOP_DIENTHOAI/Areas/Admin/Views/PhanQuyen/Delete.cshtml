@@ -1,0 +1,25 @@
+﻿@model SHOP_DIENTHOAI.Models.PHAN_QUYEN
+
+@{
+    ViewBag.Title = "Xóa quyền";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<div class="container w-50 mt-4 p-4 border rounded shadow bg-light">
+    <h2 class="text-center text-danger mb-4">Xóa quyền</h2>
+
+    <div class="alert alert-warning text-center">
+        <strong>Bạn có chắc chắn muốn xóa quyền "<span class="text-danger">@Model.Ten_Quyen</span>" không?</strong>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ID_Quyen)
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Xóa</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Hủy</a>
+        </div>
+    }
+</div>

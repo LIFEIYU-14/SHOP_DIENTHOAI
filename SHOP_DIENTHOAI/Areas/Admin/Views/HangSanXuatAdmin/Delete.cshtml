@@ -1,0 +1,26 @@
+﻿@model SHOP_DIENTHOAI.Models.HANG_SAN_XUAT
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<h2 class="card-header text-xl-center justify-content-xl-center">Xóa hãng sản xuất</h2>
+<hr />
+
+<div class="container">
+    <h3>Bạn có chắc chắn xóa hãng sản xuất này?</h3>
+
+    <h4>Tên hãng sản xuất: @Html.DisplayFor(model => model.TEN_HSX)</h4>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions">
+            <input type="submit" value="Xóa" class="btn btn-danger btn-lg" />
+            <a href="@Url.Action("Index")" class="btn btn-warning btn-lg"><i class="fa-solid fa-right-from-bracket fa-rotate-180" style="color: #0a357b;"></i> Quay lại</a>
+        </div>
+
+    }
+</div>
+
+

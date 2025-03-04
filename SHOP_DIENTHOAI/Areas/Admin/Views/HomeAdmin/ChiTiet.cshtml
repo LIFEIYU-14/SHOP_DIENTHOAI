@@ -1,0 +1,43 @@
+﻿@model SHOP_DIENTHOAI.Models.SAN_PHAM
+@{
+    ViewBag.Title = "ChiTiet";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+<style>
+    .text-lg{
+        font-size:25px;
+    }
+</style>
+<div class="container">
+    <h2 class="text-center bg-primary m-2 p-2">Thông tin chi tiết sản phẩm</h2>
+    <div class="card mx-auto">
+        <div class="card-body row">
+            <div class="col-md-4">
+                <!-- Hình ảnh -->
+                <img src="~/Asset/images/@Model.HinhAnh" alt="Product Image" style="width:280px " />
+            </div>
+            <div class="col-md-8">
+            
+               
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt class="text-lg">Tên sản phẩm:</dt>
+                    <dd class="text-lg">@Html.DisplayFor(model => model.TEN_SP)</dd>
+
+                    <dt class="text-lg">Hãng sản xuất:</dt>
+                    <dd class="text-lg">@Html.DisplayFor(model => model.HANG_SAN_XUAT.TEN_HSX)</dd>
+
+                    <dt class="text-lg">Giá bán:</dt>
+                    <dd class="text-lg">@String.Format("{0:0,0}", Model.GIA) VNĐ</dd>
+
+                    <dt class="text-lg">Ghi chú:</dt>
+                    <dd class="text-lg">@Html.DisplayFor(model => model.GHICHU_SP)</dd>
+                </dl>
+                <div class="text-center mt-3">
+                    <a href="@Url.Action("Index")" class="btn btn-warning btn-lg"><i class="fa-solid fa-right-from-bracket fa-rotate-180" style="color: #0a357b;"></i> Quay lại</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

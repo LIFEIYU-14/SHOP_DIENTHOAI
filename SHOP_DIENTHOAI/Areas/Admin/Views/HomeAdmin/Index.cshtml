@@ -1,0 +1,143 @@
+﻿@model List<SHOP_DIENTHOAI.Models.SAN_PHAM>
+
+@{ 
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+@{
+    int totalPages = ViewBag.TotalPages;
+    int currentPage = ViewBag.CurrentPage;
+}
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .pagination li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .pagination a {
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 16px;
+            transition: background-color 0.3s;
+            margin: 0 2px;
+        }
+
+        .pagination a.active {
+            background-color: aqua;
+        }
+
+        .pagination a:hover {
+           background-color: brown;
+         }
+</style>
+
+<div class="container">
+    <p>
+        <a href="@Url.Action("ThemSP")" class="btn btn-primary m-2" style="font-size: 18px;">
+            <i class="fas fa-plus-circle"></i> Thêm mới sản phẩm
+        </a>
+    </p>
+    @using (Html.BeginForm("Index", "HomeAdmin", FormMethod.Get))
+    {
+        <div class="col-md-12">
+            <label for="sortBy">Sắp xếp theo</label>
+            <select name="sortBy">
+                <option value="Giá Bán tăng dần" @(ViewBag.SortBy == "Giá Bán tăng dần" ? "selected" : "")>Giá Bán tăng dần </option>
+                <option value="Giá Bán giảm dần" @(ViewBag.OrderByDescending == "Giá Bán giảm dần" ? "selected" : "")>Giá Bán giảm dần </option>
+                <option value="Tên Sản Phẩm tăng dần" @(ViewBag.SortBy == "Tên Sản Phẩm tăng dần" ? "selected" : "")>Tên sản phẩm tăng dần</option>
+                <option value="Tên Sản Phẩm giảm dần" @(ViewBag.OrderByDescending == "Tên Sản Phẩm giảm dần" ? "selected" : "")>Tên sản phẩm giảm dần</option>
+            </select>
+            <input type="submit" value="SẮP XẾP" />
+        </div>
+    }
+    <table class="table table-info py-5">
+        <tr class="text-xl-center" style="color:red">
+            <th>
+                Hình Ảnh
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Tên hãng sản xuất
+            </th>
+            <th>
+                Giá tiền
+            </th>
+            <th>
+                Số lượng
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="text-xl-center">
+                <td>
+                    <img src="~/Asset/images/@item.HinhAnh" width="190" height="170" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TEN_SP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HANG_SAN_XUAT.TEN_HSX)
+                </td>
+                <td>
+                    @String.Format("{0:0,0}", item.GIA) VNĐ
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SOLUONG)
+                </td>
+                <td>
+                    <button class="btn btn-success">
+                        <i class="fas fa-edit"></i> @Html.ActionLink("Sửa", "Edit", new { id = item.MA_SP }, new { @style = "color:white;text-decoration:none;" })
+                    </button>
+                    <button class="btn btn-primary">
+                        @Html.ActionLink("Chi tiết", "ChiTiet", new { id = item.MA_SP }, new { @style = "color:white;text-decoration:none;" })
+                    </button>
+                    <button class="btn btn-danger">
+                        <i class="fa-solid fa-trash"></i>@Html.ActionLink("Xóa", "Delete", new { id = item.MA_SP }, new { @style = "color:white;text-decoration:none;" })
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <table class="justify-content-between">
+        @if (totalPages > 1)
+        {
+            <div class="pagination">
+                @if (currentPage > 1)
+                {
+                    <a class="page-link" href="@Url.Action("Index", new {search = ViewBag.Search, sortBy = ViewBag.SortOrder, page = currentPage - 1 })">Prev</a>
+                }
+
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    if (i == currentPage)
+                    {
+                        <a class="page-link active">@i</a>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@Url.Action("Index", new {search = ViewBag.Search, sortBy = ViewBag.SortOrder, page = i })">@i</a>}
+                }
+
+                @if (currentPage < totalPages)
+                {
+                    <a class="page-link" href="@Url.Action("Index", new {id =ViewBag.Id, search = ViewBag.Search, sortBy = ViewBag.SortOrder, page = currentPage + 1 })">Next</a>
+                }
+            </div>
+        }
+    </table>
+</div>

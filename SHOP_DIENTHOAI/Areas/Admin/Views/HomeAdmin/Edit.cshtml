@@ -1,0 +1,93 @@
+﻿@model SHOP_DIENTHOAI.Models.SAN_PHAM
+@{
+    ViewBag.Title = "Chỉnh sửa sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center text-primary fw-bold">Chỉnh sửa sản phẩm</h2>
+        <hr />
+
+        @using (Html.BeginForm("Edit", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.MA_SP)
+
+            <div class="row">
+                <!-- Hình ảnh sản phẩm -->
+                <div class="col-md-12 mb-3">
+                    <label class="form-label fw-semibold">Hình ảnh sản phẩm</label>
+                    <div class="text-center">
+                        <img id="previewImage" src="@Url.Content(Model.HinhAnh)" alt="Hình sản phẩm" class="rounded border mb-2" style="max-width: 200px; height: auto;" />
+                    </div>
+                    <input type="file" name="imageFile" id="imageFile" class="form-control" accept="image/*" onchange="previewFile()" />
+                    @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Hãng sản xuất -->
+                <div class="col-md-6 mb-3">
+                    @Html.LabelFor(model => model.MA_HSX, "Hãng sản xuất", new { @class = "form-label fw-semibold" })
+                    @Html.DropDownListFor(model => model.MA_HSX, new SelectList(ViewBag.HSX, "MA_HSX", "TEN_HSX"), "Chọn hãng sản xuất", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.MA_HSX, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Tên sản phẩm -->
+                <div class="col-md-6 mb-3">
+                    @Html.LabelFor(model => model.TEN_SP, "Tên sản phẩm", new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.TEN_SP, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên sản phẩm" } })
+                    @Html.ValidationMessageFor(model => model.TEN_SP, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Giá -->
+                <div class="col-md-6 mb-3">
+                    @Html.LabelFor(model => model.GIA, "Giá sản phẩm", new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.GIA, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", placeholder = "Nhập giá sản phẩm" } })
+                    @Html.ValidationMessageFor(model => model.GIA, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Số lượng -->
+                <div class="col-md-6 mb-3">
+                    @Html.LabelFor(model => model.SOLUONG, "Số lượng", new { @class = "form-label fw-semibold" })
+                    @Html.EditorFor(model => model.SOLUONG, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", placeholder = "Nhập số lượng" } })
+                    @Html.ValidationMessageFor(model => model.SOLUONG, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Ghi chú -->
+                <div class="col-md-12 mb-3">
+                    @Html.LabelFor(model => model.GHICHU_SP, "Ghi chú", new { @class = "form-label fw-semibold" })
+                    @Html.TextAreaFor(model => model.GHICHU_SP, new { @class = "form-control", rows = 4, placeholder = "Nhập ghi chú sản phẩm (nếu có)" })
+                    @Html.ValidationMessageFor(model => model.GHICHU_SP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4">
+                    <i class="fas fa-save"></i> Lưu thông tin
+                </button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary ms-2 px-4">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Script xem trước ảnh khi tải lên -->
+<script>
+    function previewFile() {
+        var preview = document.getElementById("previewImage");
+        var file = document.getElementById("imageFile").files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "@Url.Content(Model.HinhAnh)";
+        }
+    }
+</script>

@@ -1,0 +1,43 @@
+﻿@model SHOP_DIENTHOAI.Models.NGUOI_DUNG
+
+@{
+    ViewBag.Title = "Xoá người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<h2 class="text-center my-4"><i class="fa-solid fa-trash"></i> Xoá người dùng</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="container w-50">
+    <dl class="row">
+        <dt class="col-sm-4">Tên người dùng</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.TEN_ND)</dd>
+
+        <dt class="col-sm-4">Email</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.EMAIL)</dd>
+
+        <dt class="col-sm-4">Điện thoại</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.DIEN_THOAI)</dd>
+
+        <dt class="col-sm-4">Tên quyền</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.PHAN_QUYEN.Ten_Quyen)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="text-center">
+            <input type="submit" value="Xoá" class="btn btn-warning btn-lg" />
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-success btn-lg ml-2" })
+        </div>
+    }
+</div>
