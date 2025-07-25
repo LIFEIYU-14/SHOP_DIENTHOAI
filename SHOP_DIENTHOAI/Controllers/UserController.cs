@@ -33,12 +33,13 @@ namespace SHOP_DIENTHOAI.Controllers
                 return newRole.ID_Quyen;
             }
         }
+        // Đăng ký người dùng mới
         public ActionResult DangKy()
         {
             return View();
         }
 
-
+        // Xử lý đăng ký người dùng mới
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DangKy(NGUOI_DUNG nguoidung)
@@ -69,13 +70,13 @@ namespace SHOP_DIENTHOAI.Controllers
                 return View("DangKy");
             }
         }
-
+        // Đăng nhập người dùng
         public ActionResult DangNhap()
         {
             return View();
 
         }
-
+        // Xử lý đăng nhập người dùng
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DangNhap(FormCollection userlog)
