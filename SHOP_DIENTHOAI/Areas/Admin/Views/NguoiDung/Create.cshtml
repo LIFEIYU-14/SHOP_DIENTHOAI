@@ -1,0 +1,54 @@
+﻿@model SHOP_DIENTHOAI.Models.NGUOI_DUNG
+
+@{
+    ViewBag.Title = "Thêm Người Dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary fw-bold display-4">Thêm Người Dùng Mới</h2>
+
+    @using (Html.BeginForm("Create", "NguoiDung", FormMethod.Post, new { @class = "card p-4 shadow", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.TEN_ND, "Tên Người Dùng", new { @class = "form-label fw-bold" })
+            @Html.TextBoxFor(model => model.TEN_ND, new { @class = "form-control", placeholder = "Nhập tên người dùng", required = "required" })
+            @Html.ValidationMessageFor(model => model.TEN_ND, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.EMAIL, "Email", new { @class = "form-label fw-bold" })
+            @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control", type = "email", placeholder = "Nhập email", required = "required" })
+            @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DIEN_THOAI, "Số Điện Thoại", new { @class = "form-label fw-bold" })
+            @Html.TextBoxFor(model => model.DIEN_THOAI, new { @class = "form-control", placeholder = "Nhập số điện thoại", required = "required" })
+            @Html.ValidationMessageFor(model => model.DIEN_THOAI, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.MATKHAU, "Mật Khẩu", new { @class = "form-label fw-bold" })
+            @Html.PasswordFor(model => model.MATKHAU, new { @class = "form-control", placeholder = "Nhập mật khẩu", required = "required" })
+            @Html.ValidationMessageFor(model => model.MATKHAU, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DIA_CHI, "Địa Chỉ", new { @class = "form-label fw-bold" })
+            @Html.TextBoxFor(model => model.DIA_CHI, new { @class = "form-control", placeholder = "Nhập địa chỉ" })
+            @Html.ValidationMessageFor(model => model.DIA_CHI, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.ID_Quyen, "Chức năng", new { @class = "form-label fw-bold" })
+            @Html.DropDownList("ID_Quyen", null, "Chọn quyền", new { @class = "form-select", required = "required" })
+            @Html.ValidationMessageFor(model => model.ID_Quyen, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-primary fw-bold">Thêm Người Dùng</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>
+    }
+</div>

@@ -1,0 +1,335 @@
+﻿@using SHOP_DIENTHOAI.Models
+@model SAN_PHAM
+@{
+    ViewBag.Title = "ChiTiet";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<style>
+    .image img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .image img:hover {
+            transform: scale(1.2);
+        }
+
+    .image-more img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .image-more img:hover {
+            transform: scale(1.8);
+        }
+    .comment-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        background-color: #f9f9f9;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .comment-item strong {
+            font-size: 24px;
+            color: #ff8c00;
+        }
+
+        .comment-item small {
+            color: #777;
+            margin-left: 8px;
+            font-size: 22px;
+        }
+
+        .comment-item p {
+            margin-top: 6px;
+            font-size: 24px;
+            color: #555;
+        }
+
+    .nav-tabs li a {
+        font-weight: bold;
+        color: #007bff !important;
+        padding: 10px 15px;
+    }
+
+    .nav-tabs li.active a {
+        background-color: #007bff !important;
+        color: white !important;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .tab-content {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 0 0 8px 8px;
+        background-color: white;
+    }
+
+    .form-group textarea {
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>
+<div id="page-content" class="single-page">
+    <div class="container">
+
+        <div class="row">
+            <div id="main-content" class="col-md-8">
+                <div class="product">
+                    <div class="col-md-6">
+                        <div class="image">
+                            <img src="~/Asset/images/@Model.HinhAnh" style="max-width:205px;max-height:205px" />
+                            <div class="image-more">
+                                <ul class="row">
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh1"></a>
+                                    </li>
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh2"></a>
+                                    </li>
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh3"></a>
+                                    </li>
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/images/@Model.Hinh4"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="caption">
+                            <div class="name"><h3 style="color:red">@Model.TEN_SP</h3></div>
+                            <div class="info">
+                                <ul>
+                                    <li style="color:black">Thương hiệu:@Model.HANG_SAN_XUAT.TEN_HSX</li>
+
+                                </ul>
+                            </div>
+                            <div class="price" style="color:deepskyblue">Giá bán: @String.Format("{0:0,0}", Model.GIA) VNĐ</div>
+                            <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                            <div class="well">
+                                <label>Số Lượng: @Model.SOLUONG </label>
+
+                            </div>
+                            <div class="well">
+
+                                @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = Model.MA_SP, @strURL = Request.Url.ToString() }))
+                                {
+                                    <button class="btn btn-round btn-danger" type="submit" value="Mua hàng" id="bgnGioHang" style="padding:10px;margin-top:10px"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                                }
+                            </div>
+                            <div class="share well">
+                                <strong style="margin-right: 13px;">Share :</strong>
+                                <a href="#" class="share-btn" target="_blank">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#" class="share-btn" target="_blank">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a href="#" class="share-btn" target="_blank">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="product-desc">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="">Giới thiệu</a></li>
+                        <li><a href=""></a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="description" class="tab-pane fade in active">
+                            <h4 style="color:red">@Model.TEN_SP</h4>
+                            <p>@Model.GHICHU_SP<br /></p>
+
+                        </div>
+                        <div id="review" class="tab-pane fade">
+                            <div class="review-text">
+                                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            </div>
+                            <div class="review-form">
+                                <h4>Write a review</h4>
+                                <form name="form1" id="ff" method="post" action="review.php">
+                                    <label>
+                                        <span>Enter your name:</span>
+                                        <input type="text" name="name" id="name" required>
+                                    </label>
+                                    <label>
+                                        <span>Your message here:</span>
+                                        <textarea name="message" id="message"></textarea>
+                                    </label>
+                                    <div class="text-right">
+                                        <input class="btn btn-default" type="reset" name="reset" value="Reset">
+                                        <input class="btn btn-default" type="submit" name="Submit" value="Submit">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-desc">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="">DANH SÁCH BÌNH LUẬN</a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div id="description" class="tab-pane fade in active">
+                            @if (Model.COMMENT != null && Model.COMMENT.Any())
+                            {
+                                foreach (var comment in Model.COMMENT.OrderByDescending(c => c.NGAY_CMT))
+                                {
+                                    <div class="comment-item" style="border-bottom:1px solid #ccc; margin-bottom:10px; padding-bottom:5px">
+                                        <strong>@comment.NGUOI_DUNG.TEN_ND</strong>
+                                        <small style="color:gray"> đã đăng vào @comment.NGAY_CMT.ToString("dd/MM/yyyy 'lúc' HH:mm:tt") </small>
+                                        <p>@comment.NOIDUNG_CMT</p>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="comment-item">
+                                    <p>Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+                                </div>
+                            }
+
+                        </div>
+                        <div id="review" class="tab-pane fade">
+                            @using (Html.BeginForm("ThemBinhLuan", "SanPham", FormMethod.Post))
+                            {
+                                @Html.Hidden("productId", Model.MA_SP)
+                                <div class="form-group">
+                                    @Html.TextArea("commentContent", null, new { @class = "form-control", placeholder = "Nhập bình luận của bạn tại đây...", rows = "4" })
+                                </div>
+                                <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="product-related">
+                    <div class="heading"><h2>Sản phẩm tương tự</h2></div>
+
+                    @Html.Action("SanPhamTuongTu", "SanPham")
+
+
+                </div>
+
+            </div>
+            <div id="sidebar" class="col-md-4">
+                <div class="widget wid-categories">
+                    <div class="heading"><h4>CATEGORIES</h4></div>
+                    <div class="content">
+                        <ul>
+                            <li><a href="#">PC Computers</a></li>
+                            <li><a href="#">Laptops & Notebooks</a></li>
+                            <li><a href="#">Mobiles & Tablet</a></li>
+                            <li><a href="#">Software</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="widget wid-type">
+                    <div class="heading"><h4>TYPE</h4></div>
+                    <div class="content">
+                        <select>
+                            <option value="EL" selected>Electronics</option>
+                            <option value="MT">Mice and Trackballs</option>
+                            <option value="WC">Web Cameras</option>
+                            <option value="TA">Tablates</option>
+                            <option value="AP">Audio Parts</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="widget wid-discouts">
+                    <div class="heading"><h4>DISCOUNTS</h4></div>
+                    <div class="content">
+                        <label class="checkbox"><input type="checkbox" name="discount" checked="">Upto - 10% (20)</label>
+                        <label class="checkbox"><input type="checkbox" name="discount">40% - 50% (5)</label>
+                        <label class="checkbox"><input type="checkbox" name="discount">30% - 20% (7)</label>
+                        <label class="checkbox"><input type="checkbox" name="discount">10% - 5% (2)</label>
+                        <label class="checkbox"><input type="checkbox" name="discount">Other(50)</label>
+                    </div>
+                </div>
+                <div class="widget wid-brand">
+                    <div class="heading"><h4>BRAND</h4></div>
+                    <div class="content">
+                        <label class="checkbox"><input type="checkbox" name="brand">Nokia</label>
+                        <label class="checkbox"><input type="checkbox" name="brand">Samsung</label>
+                        <label class="checkbox"><input type="checkbox" name="brand">Iphone</label>
+                        <label class="checkbox"><input type="checkbox" name="brand">HTC</label>
+                        <label class="checkbox"><input type="checkbox" name="brand">Oppo</label>
+                        <label class="checkbox"><input type="checkbox" name="brand">Kings</label>
+                        <label class="checkbox"><input type="checkbox" name="brand">Zumba</label>
+                    </div>
+                </div>
+                <div class="widget wid-product">
+                    <div class="heading"><h4>LATEST</h4></div>
+                    <div class="content">
+                        <div class="product">
+                            <a href="#"><img src="~/Asset/images/galaxy-note.jpg" /></a>
+                            <div class="wrapper">
+                                <h5><a href="#">Samsung Galaxy Tab</a></h5>
+                                <div class="price">$122</div>
+                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                            </div>
+                        </div>
+                        <div class="product">
+                            <a href="#"><img src="~/Asset/images/galaxy-s4.jpg" /></a>
+                            <div class="wrapper">
+                                <h5><a href="#">Samsung Galaxy Tab</a></h5>
+                                <div class="price">$122</div>
+                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                            </div>
+                        </div>
+                        <div class="product">
+                            <a href="#"><img src="~/Asset/images/Z1.png" /></a>
+                            <div class="wrapper">
+                                <h5><a href="#">Samsung Galaxy Tab</a></h5>
+                                <div class="price">$122</div>
+                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add this script to your page or in a separate JavaScript file
+    document.addEventListener("DOMContentLoaded", function () {
+        var imageMoreItems = document.querySelectorAll('.image-more ul li');
+
+        imageMoreItems.forEach(function (item) {
+            item.addEventListener('mouseenter', function () {
+                this.querySelector('img').style.transform = 'scale(1.2)';
+            });
+
+            item.addEventListener('mouseleave', function () {
+                this.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>
+

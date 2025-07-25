@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "_MainLayout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Shop Điện Thoại</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="~/Asset/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/Asset/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="~/Asset/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Asset/fonts/font-slider.css" type="text/css">
+
+    <!-- jQuery and Modernizr-->
+    <script src="~/Asset/js/jquery-2.1.1.js"></script>
+
+    <!-- Core JavaScript Files -->
+
+    <script src="~/Asset/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    @{ var u = Session["use"] as SHOP_DIENTHOAI.Models.NGUOI_DUNG; }
+    <!--Top-->
+    <nav id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+
+                </div>  
+                @{ if (u != null)
+                    {
+                        <div class="col-xs-6">
+                            <ul class="top-link">
+                                <li><a href="@Url.Action("HoSoNguoiDung", "User", new { id = u.MA_ND  })" style="color:orangered"><i class="fa-solid fa-user fa-beat-fade fa-sm" style="color: #0282e3;"></i> XIN CHÀO : <i class="fa-solid fa-address-card" style="color: #e4de1b;"></i> @u.TEN_ND</a></li>
+                                <li><a href="/User/DangXuat"><i class="fa-solid fa-right-from-bracket fa-beat fa-sm" style="color: #ff1414;"></i> ĐĂNG XUẤT</a></li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-6">
+                            <ul class="top-link">
+                                <li><a href="/User/DangKy"><i class="fa-solid fa-user fa-beat-fade fa-sm" style="color: #0282e3;"></i> Đăng ký</a></li>
+                                <li><a href="/User/DangNhap"><i class="fa-solid fa-right-from-bracket fa-beat fa-sm" style="color: #ff1414;"></i> Đăng nhập</a></li>      
+                            </ul>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </nav>
+    <!--Header-->
+    <header class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div id="logo"><a href="/Home/Index"><img src="~/Asset/images/LOGO.jpg" /></a></div>
+            </div>
+            <div class="col-md-4">
+                <form class="form-search" action="/SanPham/Index">
+                    <div class="input-group">
+                        <input type="search"
+                               class="input-medium search-query form-control"
+                        id="search"
+                        name="search"
+                        placeholder="Tìm Kiếm" />
+
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="col-md-4">
+                @Html.Action("GioHangPartial", "GioHang", new { @class = "glyphicon" })
+            </div>
+        </div>
+    </header>
+    <!--Navigation-->
+    <nav id="menu" class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <span id="heading" class="visible-xs">MENU</span>
+                <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+
+                    <li>
+
+                        @Html.ActionLink("Trang Chủ", "Index", "Home")
+                    </li>
+                    <li class="dropdown">
+                        @Html.ActionLink("Sản phẩm", "Index", "SanPham")
+                        @Html.Action("BrandList", "HangSanXuat")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Đơn Hàng", "Index", "DonHang")
+                    </li>
+
+                    <li><a href="https://www.facebook.com/lifeiiyu.14" target="_blank">Giới Thiệu</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+    <footer style="margin-top:45px">
+        <div class="container">
+            <div class="wrap-footer">
+                <div class="row">
+                    <div class="col-md-6 col-footer footer-1">
+                        <img src="~/Asset/images/LOGO.jpg" />
+                        <p>Đơn giản - Uy tín - Chất lượng</p>
+                    </div>
+
+                    <div class="col-md-6 col-footer footer-4">
+                        <div class="heading"><h4>Liên lạc</h4></div>
+                        <ul>
+                            <li><span class="glyphicon glyphicon-home"></span>17 Nguyễn Hữu Tiến ,Tây Thạnh, Tân Phú,TP.HCM</li>
+                            <li><span class="glyphicon glyphicon-earphone"></span>+84 379179281</li>
+                            <li><span class="glyphicon glyphicon-envelope"></span>tn216003@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        Design by <a href="https://www.facebook.com/lifeiiyu.14">Nguyễn Công Tiến</a>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <ul>
+                                <li><img src="~/Asset/images/visa-curved-32px.png" /></li>
+                                <li><img src="~/Asset/images/paypal-curved-32px.png" /></li>
+                                <li><img src="~/Asset/images/discover-curved-32px.png" /></li>
+                                <li><img src="~/Asset/images/maestro-curved-32px.png" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+

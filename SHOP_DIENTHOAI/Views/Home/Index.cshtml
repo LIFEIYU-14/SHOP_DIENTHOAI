@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<style>
+    .image img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .image img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .image img:hover {
+            transform: scale(1.1);
+        }
+</style>
+<div id="page-content" class="home-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Carousel -->
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators hidden-xs">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="~/Asset/images/poster.jpg">
+                            <!-- Static Header -->
+                            <div class="header-text hidden-xs">
+                                <div class="col-md-12 text-center">
+                                </div>
+                            </div><!-- /header-text -->
+                        </div>
+                        <div class="item">
+                            <img src="~/Asset/images/poster2.jpg">
+                            <!-- Static Header -->
+                            <div class="header-text hidden-xs">
+                                <div class="col-md-12 text-center">
+                                </div>
+                            </div><!-- /header-text -->
+                        </div>
+                        <div class="item">
+                            <img src="~/Asset/images/main-banner3-1903x600.jpg" alt="Third slide">
+                            <!-- Static Header -->
+                            <div class="header-text hidden-xs">
+                                <div class="col-md-12 text-center">
+                                </div>
+                            </div><!-- /header-text -->
+                        </div>
+                    </div>
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div><!-- /carousel -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="banner">
+                <div class="col-sm-4">
+                    <img src="~/Asset/images/sub-banner1.png" />
+                </div>
+                <div class="col-sm-4">
+                    <img src="~/Asset/images/sub-banner2.png" />
+                </div>
+                <div class="col-sm-4">
+                    <img src="~/Asset/images/sub-banner3.png" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="heading"><h2>Sản phẩm khác phổ biến</h2></div>
+                @Html.Action("SanPhamTuongTu", "Home")
+            </div>
+        </div>
+        <div class="row">
+            <div class="banner">
+                <div class="col-sm-6">
+                    <img src="~/Asset/images/sub-banner4.jpg" />
+                </div>
+                <div class="col-sm-6">
+                    <img src="~/Asset/images/sub-banner5.png" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="heading"><h2></h2></div>
+                @Html.Action("SanPhamTuongTu", "Home")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    async function sendMessage() {
+        let message = document.getElementById("message").value;
+        let response = await fetch("/api/chatgpt/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message })
+        });
+
+        if (!response.ok) {
+            document.getElementById("response").innerText = "Lỗi API: " + response.status;
+            return;
+        }
+
+        let data = await response.json();
+        document.getElementById("response").innerText = data.Reply || "Không có phản hồi từ server";
+    }
+
+</script>

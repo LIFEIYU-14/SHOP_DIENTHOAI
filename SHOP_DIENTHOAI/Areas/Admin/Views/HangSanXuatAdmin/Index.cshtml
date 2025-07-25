@@ -1,0 +1,245 @@
+﻿@model List<SHOP_DIENTHOAI.Models.HANG_SAN_XUAT>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<h2 class="card-header text-xl-center justify-content-xl-center">Hãng sản xuất</h2>
+
+@*<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary m-2" style="font-size: 18px;">
+        <i class="fas fa-plus-circle"></i> Thêm hãng sản xuất
+    </a>
+</p>*@
+<div class="container w-75 text-center">
+
+
+    <button class="btnGetHangSanXuat">Xem Hãng Sản Xuất</button>
+
+    <table class="table table-responsive m-2 hsxTable">
+        <tr>
+            <th>
+                Mã hãng sản xuất
+            </th>
+            <th>
+                Tên hãng sản xuất
+            </th>
+            <th></th>
+        </tr>
+
+        @*@foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MA_HSX)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TEN_HSX)
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-success" href="@Url.Action("Edit", new { id = item.MA_HSX })" style="color:white;"><i class="fas fa-edit"></i>Sửa</a>
+                            <a class="btn btn-danger" href="@Url.Action("Delete", new { id = item.MA_HSX })" style="color:white;"><i class="fa-solid fa-trash"></i>Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+            }*@
+
+
+    </table>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Hãng sản xuất</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr>
+                        <td>Mã hãng sản xuất</td>
+                        <td><span id="maHSXspan"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Tên hãng sản xuất</td>
+                        <td><span id="tenHSXspan"></span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-group bg-primary">
+    <div class="card">
+        <div class="card-header alert-danger text-white bg-black">
+            Hãng sản Xuất mới
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="col-12">
+                    <label for="tenHSX">Tên Hãng Sản Xuất</label>
+                    <input type="text" class="form-control" placeholder="Tên hãng" id="txttenHSX" />
+                </div>
+            </form>
+        </div>
+        <div class="card-footer alert-success">
+            <button type="button" id="btnInsert" class="btn btn-warning">SAVE</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header alert-warning text-white  bg-black">
+            Cập nhật hãng sản Xuất
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="col-12">
+                    <label for="maHSX">Mã Hãng Sản Xuất</label>
+                    <input type="text" class="form-control" placeholder="Mã hãng" id="txtmaHSXUpdate" disabled="disabled" />
+                </div>
+                <div class="col-12">
+                    <label for="tenHSX">Tên Hãng Sản Xuất</label>
+                    <input type="text" class="form-control input-group" placeholder="Tên loại" id="txttenHSXUpdate" />
+                </div>
+            </form>
+        </div>
+        <div class="card-footer alert-success">
+            <button type="button" id="btnUpdate" class="btn btn-warning">SAVE</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">HÃNG SẢN XUÁT</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Bạn có chắc chắn xóa hãng sản xuất này?</h5>
+                <table class="table">
+                    <tr>
+                        <td>Mã hãng sản xuất</td>
+                        <td><span id="deletemaHSXspan"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Tên hãng sản xuất</td>
+                        <td><span id="deletetenHSXspan"></span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btnDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $('.btnGetHangSanXuat').click(() => {
+        $('.hsxTable tbody').empty();
+        $('.hsxTable tbody').append('<tr><th>Mã hãng sản xuất</th><th>Tên hãng sản xuất</th><th></th></tr>');
+        $.ajax({
+            type: 'GET',
+            url: '/api/HangSanXuatApi',
+            success: (reponses) => {
+                for (var i = 0; i < reponses.length; i++) {
+                    const hsxRow = reponses[i];
+                    
+                    const stringHtml = '<tr><td>' + hsxRow.MA_HSX + '</td><td>' + hsxRow.TEN_HSX + '</td><td><button type="button" class="btn btn-primary btnViewHSX" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idlsp="' + hsxRow.MA_HSX + '">View</button> <button type="button" class="btn btn-primary btnUpdateHSX" data-idlsp="' + hsxRow.MA_HSX + '">Edit</button> <button type="button" class="btn btn-primary btnDeleteHSX" data-bs-toggle="modal" data-bs-target="#deleteModal" data-idlsp="' + hsxRow.MA_HSX + '">Delete</button></td></tr>';
+                    $('.hsxTable').append(stringHtml);
+                }
+            },
+            error: () => { },
+        });
+    });
+    $(document).on('click', '.btnViewHSX', (event) => {
+        const lid = $(event.target).attr('data-idlsp');
+        $.ajax({
+            type: 'GET',  
+            url: `/api/HangSanXuatApi?id=${lid}`,
+            success: (response) => {
+                $('#maHSXspan').html(response.MA_HSX); 
+                $('#tenHSXspan').html(response.TEN_HSX); 
+            },
+            error: (err) => { console.log(err); }
+        });
+    });
+    $('#btnInsert').click(() => {
+        const TEN_HSX = $('#txttenHSX').val();
+        $.ajax({
+            type: 'POST',
+            url: '/api/HangSanXuatApi',
+            data: { 'TEN_HSX': TEN_HSX },
+            success: (response) => {
+                $('#txttenHSX').val('');
+                $('#btnGetHangSanXuat').trigger('click');
+            },
+            error: (err) => { console.log(err); }
+        });
+    });
+    $(document).on('click', '.btnUpdateHSX', (event) => {
+        const lid = $(event.target).attr('data-idlsp');
+        $.ajax({
+            type: 'GET',
+            url: `/api/HangSanXuatApi?id=${lid}`,
+            success: (response) => {
+                $('#txtmaHSXUpdate').val(response.MA_HSX);
+                $('#txttenHSXUpdate').val(response.TEN_HSX);
+            },
+            error: (err) => { console.log(err); }
+        });
+    });
+    $('#btnUpdate').click(() => {
+        const MA_HSX = $('#txtmaHSXUpdate').val();
+        const TEN_HSX = $('#txttenHSXUpdate').val();
+        $.ajax({
+            type: 'PUT',
+            url: `/api/HangSanXuatApi?id=${MA_HSX}`,
+            data: { 'MA_HSX': MA_HSX, 'TEN_HSX': TEN_HSX },
+            success: (response) => {
+                $('#txtmaHSXUpdate').val('');
+                $('#txttenHSXUpdate').val('');
+
+                $('#btnGetHangSanXuat').trigger('click');
+            },
+            error: (err) => { console.log(err); }
+        });
+    });
+    //DELETE
+    $(document).on('click', '.btnDeleteHSX', (event) => {
+        const brid = $(event.target).attr('data-idlsp');
+        $.ajax({
+            type: 'GET',
+            url: `/api/HangSanXuatApi?id=${brid}`,
+            success: (response) => {
+                $('#deletemaHSXspan').html(response.MA_HSX);
+                $('#deletetenHSXspan').html(response.TEN_HSX);
+            },
+            error: (err) => { console.log(err); }
+        });
+    });
+    $('#btnDelete').click(() => {
+        const MA_HSX = $('#deletemaHSXspan').html();
+
+        $.ajax({
+            type: 'DELETE',
+            url: `/api/HangSanXuatApi?id=${MA_HSX}`,
+            success: (response) => {
+                $('#btnGetHangSanXuat').trigger('click');
+            },
+            error: (err) => { console.log(err); }
+        });
+    });
+</script>
+

@@ -1,0 +1,87 @@
+﻿@model List<SHOP_DIENTHOAI.Models.NGUOI_DUNG>
+@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary fw-bold display-4">Quản lý Người Dùng</h2>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="@Url.Action("Create")" class="btn btn-success fw-bold">
+            <i class="fas fa-user-plus"></i> Thêm Người Dùng
+        </a>
+    </div>
+
+    <div class="card shadow p-3">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th class="fs-5">Tên người dùng</th>
+                        <th class="fs-5">Email</th>
+                        <th class="fs-5">Số điện thoại</th>
+                        <th class="fs-5">Mật khẩu</th>
+                        <th class="fs-5">Địa chỉ</th>
+                        <th class="fs-5">Chức năng</th>
+                        <th class="fs-5">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fs-5">@Html.DisplayFor(modelItem => item.TEN_ND)</td>
+                            <td class="fs-5">@Html.DisplayFor(modelItem => item.EMAIL)</td>
+                            <td class="fs-5">@Html.DisplayFor(modelItem => item.DIEN_THOAI)</td>
+                            <td>
+                                <input type="password" class="form-control-plaintext text-center fs-5" value="********" readonly />
+                            </td>
+                            <td class="fs-5">@Html.DisplayFor(modelItem => item.DIA_CHI)</td>
+                            <td class="fs-5">@Html.DisplayFor(modelItem => item.PHAN_QUYEN.Ten_Quyen)</td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a class="btn btn-sm btn-outline-primary fs-5" href="@Url.Action("Edit", new { id = item.MA_ND })">
+                                        <i class="fas fa-edit"></i> Sửa
+                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger btn-delete fs-5" data-id="@item.MA_ND">
+                                        <i class="fas fa-trash"></i> Xóa
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".btn-delete").click(function () {
+            var deleteId = $(this).data("id");
+            if (confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
+                $.ajax({
+                    url: '@Url.Action("DeleteConfirmed", "NguoiDung", new { Area = "Admin" })',
+                    type: "POST",
+                    data: {
+                        id: deleteId,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        alert(response.message);
+                        if (response.success) {
+                            location.reload();
+                        }
+                    },
+                    error: function () {
+                        alert("Có lỗi xảy ra!");
+                    }
+                });
+            }
+        });
+    });
+</script>

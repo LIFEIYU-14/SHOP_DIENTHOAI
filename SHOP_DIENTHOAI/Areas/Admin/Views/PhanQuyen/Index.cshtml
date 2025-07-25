@@ -1,0 +1,41 @@
+﻿@model List<SHOP_DIENTHOAI.Models.PHAN_QUYEN>
+
+@{
+    ViewBag.Title = "Quản lý quyền";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center text-primary">Danh sách quyền truy cập</h2>
+
+    <a href="@Url.Action("Create")" class="btn btn-success my-3">
+        <i class="fas fa-plus-circle"></i> Thêm quyền
+    </a>
+
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tên Quyền</th>
+                <th class="text-center">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID_Quyen)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Ten_Quyen)</td>
+                    <td class="text-center">
+                        <a href="@Url.Action("Edit", new { id = item.ID_Quyen })" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.ID_Quyen })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa quyền này không?');">
+                            <i class="fas fa-trash"></i> Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

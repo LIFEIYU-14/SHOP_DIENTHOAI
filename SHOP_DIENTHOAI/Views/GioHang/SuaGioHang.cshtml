@@ -1,0 +1,50 @@
+﻿@using SHOP_DIENTHOAI.Models;
+@model List<GIO_HANG>
+@{
+    ViewBag.Title = "SuaGioHang";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div id="page-content" class="single-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li>@Html.ActionLink("Trang Chủ", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Giỏ hàng", "GioHang", "GioHang")</li>
+                    <li>@Html.ActionLink("Sửa Giỏ hàng", "SuaGioHang", "GioHang")</li>
+
+                </ul>
+            </div>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="product well">
+                    <div class="col-md-3">
+                        <div class="image">
+                            <img src="~/Asset/images/@item.sAnhBia" width="150" height="50" />
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="caption">
+                            <div class="name"><h3><a href="product.html">@item.sTensp</a></h3></div>
+
+
+                            @using (Html.BeginForm("UpdateQuantity", "GioHang", FormMethod.Get))
+                            {
+                                <p>Số lượng sản phẩm: </p><input type="number" value="@item.iSoLuong" name="sl" min="1" style="width: 70px;" />
+                                <input type="hidden" name="MaSP" value="@item.iMasp" />
+                                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+

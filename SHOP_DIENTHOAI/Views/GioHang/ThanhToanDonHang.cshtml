@@ -1,0 +1,112 @@
+﻿
+@model SHOP_DIENTHOAI.Models.DON_HANG
+@{
+    ViewBag.Title = "Thanh Toán Đơn Hàng";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<style>
+    .form-container {
+        max-width: 700px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .total-price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #d9534f;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="form-container">
+        <h2 class="text-center">Thanh Toán Đơn Hàng</h2>
+        <hr />
+
+
+
+        <!-- Form nhập thông tin đặt hàng -->
+        @using (Html.BeginForm("DatHang", "GioHang", FormMethod.Post, new { @class = "needs-validation" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label class="form-label">TÊN NGƯỜI NHẬN : @ViewBag.TenNguoiDatHang</label>
+            </div>
+            <!-- Bảng hiển thị thông tin sản phẩm đặt hàng -->
+            <h3 style="color:blue;text-align:center">Thông tin sản phẩm đặt hàng</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá / Chiếc</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.GioHang != null)
+                    {
+                        foreach (var item in ViewBag.GioHang as List<SHOP_DIENTHOAI.Models.GIO_HANG>)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/Asset/images/@item.sAnhBia" width="150" height="100" />
+                                </td>
+                                <td>@item.sTensp</td>
+                                <td>@item.iSoLuong</td>
+                                <td>@item.dDonGia.ToString("N0") VNĐ</td>
+                                <td>@String.Format("{0:0,0}", item.iSoLuong * item.dDonGia)VNĐ</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <label class="form-label">Ngày đặt</label>
+                @Html.EditorFor(model => model.NGAY_DAT, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.NGAY_DAT, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SDT_NHANHANG, "Số điện thoại nhận hàng")
+                @Html.TextBoxFor(model => model.SDT_NHANHANG, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DIACHI_NHANHANG, "Địa chỉ nhận hàng")
+                @Html.TextBoxFor(model => model.DIACHI_NHANHANG, new { @class = "form-control", placeholder = "Nhập địa chỉ nhận hàng" })
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Phương thức thanh toán</label>
+                @Html.DropDownList("MaTT", null, new { @class = "form-control" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ghi chú</label>
+                <div class="alert alert-info">
+                    <ul>
+                        <li>Đối với thanh toán bằng tiền mặt: Kiểm tra sản phẩm trước khi thanh toán cho nhân viên ship.</li>
+                        <li>Đối với thanh toán chuyển khoản: Chuyển khoản đến tài khoản <b>0379179281</b> (Ngân hàng TP BANK, Chủ tài khoản: <b>XXXXXX</b>).</li>
+                        <li>Nội dung chuyển khoản: <i>Họ tên, số điện thoại, Thanh toán CART</i>.</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="total-price">Tổng tiền: @String.Format("{0:0,0}", ViewBag.tongtien) VNĐ</p>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Đặt hàng ngay</button>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model SHOP_DIENTHOAI.Models.SAN_PHAM
+
+@{
+    ViewBag.Title = "Thêm sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<h2 style="text-align:center;color:red;margin:15px">@ViewBag.Title</h2>
+
+@using (Html.BeginForm("ThemSP", "HomeAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.TEN_SP, "Tên sản phẩm")
+            @Html.TextBoxFor(model => model.TEN_SP, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TEN_SP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2">
+
+        </div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.MA_HSX, "Hãng sản xuất", htmlAttributes: new { @class = "control-label col-md-5" })
+            @Html.DropDownListFor(model => model.MA_HSX, new SelectList(ViewBag.HSX, "MA_HSX", "TEN_HSX"), "Chọn hãng sản xuất", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MA_HSX, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.GHICHU_SP, "Ghi chú sản phẩm")
+            @Html.TextBoxFor(model => model.GHICHU_SP, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.GHICHU_SP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.GIA, "Giá sản phẩm")
+            @Html.TextBoxFor(model => model.GIA, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.GIA, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.SOLUONG, "Số lượng sản phẩm")
+            @Html.TextBoxFor(model => model.SOLUONG, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SOLUONG, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.HinhAnh, "Hình chính của sản phẩm")
+            <input type="file" name="imageFile" id="imageFile" class="form-control" />
+            @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.Hinh1, "Hình 1 của sản phẩm")
+            <input type="file" name="imageFile" id="imageFile" class="form-control" />
+            @Html.ValidationMessageFor(model => model.Hinh1, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.Hinh2, "Hình 2 của sản phẩm")
+            <input type="file" name="imageFile" id="imageFile" class="form-control" />
+            @Html.ValidationMessageFor(model => model.Hinh2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.Hinh3, "Hình 3 của sản phẩm")
+            <input type="file" name="imageFile" id="imageFile" class="form-control" />
+            @Html.ValidationMessageFor(model => model.Hinh3, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            @Html.LabelFor(model => model.Hinh4, "Hình 4 của sản phẩm")
+            <input type="file" name="imageFile" id="imageFile" class="form-control" />
+            @Html.ValidationMessageFor(model => model.Hinh4, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-2"></div>
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-plus-circle" style="color: #000000;"></i>Thêm Sản Phẩm</button>
+            <a href="@Url.Action("Index")" class="btn btn-warning btn-lg"><i class="fa-solid fa-right-from-bracket fa-rotate-180" style="color: #0a357b;"></i> Quay lại</a>
+        </div>
+    </div>
+}
+
